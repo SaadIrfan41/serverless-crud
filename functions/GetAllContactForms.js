@@ -1,8 +1,6 @@
 const axios = require('axios')
 require('dotenv').config()
-// const { GET_LINKS } = require('./utils/linkQueries.js')
-// const sendQuery = require('./utils/sendQuery')
-// const formattedResponse = require('./utils/formattedResponse')
+
 exports.handler = async (event) => {
   const Get_ALL_CONTACT_FORM = `
     query{
@@ -15,14 +13,15 @@ exports.handler = async (event) => {
       phoneNumber
     }
   }
-}`
+}
+`
 
   try {
     const { data } = await axios({
       url: 'https://graphql.fauna.com/graphql',
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNA_SECRET_KEY}`,
       },
       data: {
         query: Get_ALL_CONTACT_FORM,
