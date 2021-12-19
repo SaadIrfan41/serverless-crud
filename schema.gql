@@ -1,0 +1,10 @@
+type ContactForm {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+}
+
+type Query {
+  allContactForms: [ContactForm!]!
+}
