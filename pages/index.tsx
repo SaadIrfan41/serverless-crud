@@ -55,7 +55,7 @@ const Home: NextPage = () => {
     try {
       const res = await axios({
         method: 'delete',
-        url: '/api/DeleteContactForm',
+        url: '/.netlify/functions/DeleteContactForm',
         data: {
           id,
         },
