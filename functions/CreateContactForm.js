@@ -23,7 +23,7 @@ exports.handler = async (event) => {
       url: 'https://graphql.fauna.com/graphql',
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNA_SECRET_KEY}`,
       },
       data: {
         query: CREATE_Contact_Form,

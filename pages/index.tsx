@@ -1,43 +1,69 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-
+import Image from 'next/image'
 import Link from 'next/link'
 import useAxios from 'axios-hooks'
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const Home: NextPage = () => {
-  const [{ data, loading, error }, refetch] = useAxios(
-    '/.netlify/functions/GetAllContactForms'
-  )
-
+  const [formlist, setformlist] = useState<any>({})
+  // const [{ data, loading, error }, refetch] = useAxios(
+  //   '/api/GetAllContactForms'
+  // )
+  // useEffect(() => {
+  //   const api = async () => {
+  //     const res = await axios({
+  //       method: 'post',
+  //       url: '/.netlify/functions/GetAllContactForms',
+  //     })
+  //     // console.log(res.data.data.findContactFormByID)
+  //     setformlist(res.data)
+  //   }
+  //   api()
+  // }, [])
+  const loadLinks = async () => {
+    try {
+      const res = await fetch('/.netlify/functions/GetAllContactForms')
+      const links = await res.json()
+      setformlist(links)
+    } catch (err) {
+      console.error(err)
+    }
+  }
   useEffect(() => {
-    refetch()
-  }, [refetch])
+    loadLinks()
+  }, [])
 
-  if (loading)
-    return (
-      <div className=' min-h-screen flex justify-center items-center'>
-        <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500'></div>
-      </div>
-    )
-  if (error) return <p>Error!</p>
-  console.log(data.data.allContactForms.data)
+  console.log(formlist?.data?.allContactForms?.data)
+  // useEffect(() => {
+  //   refetch()
+  // }, [])
+
+  // if (loading)
+  //   return (
+  //     <div className=' min-h-screen flex justify-center items-center'>
+  //       <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500'></div>
+  //     </div>
+  //   )
+  // if (error) return <p>Error!</p>
+  // console.log(data.data.allContactForms.data)
 
   const deleteform = async (id: string) => {
     try {
       const res = await axios({
         method: 'delete',
-        url: '/.netlify/functions/DeleteContactForm',
+        url: '/api/DeleteContactForm',
         data: {
           id,
         },
       })
       console.log(res)
       toast.success('Contact Deleted')
-      refetch()
+      loadLinks()
+      // refetch()
     } catch (error) {
       console.log(error)
       //@ts-ignore
@@ -54,7 +80,7 @@ const Home: NextPage = () => {
       <div className=' max-w-7xl mx-auto'>
         <div
           className={` ${
-            data.data.allContactForms.data.length === 0
+            formlist?.data?.allContactForms?.data.length === 0
               ? 'grid place-items-center h-screen'
               : 'mb-5 mt-5 flex justify-center '
           }`}
@@ -83,7 +109,7 @@ const Home: NextPage = () => {
           </Link>
         </div>
         <ul className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {data?.data?.allContactForms?.data?.map((form: any) => (
+          {formlist?.data?.allContactForms?.data.map((form: any) => (
             <li
               key={form._id}
               className='col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200'
