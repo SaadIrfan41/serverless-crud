@@ -21,7 +21,7 @@ const EditContactForm = ({ id }: any) => {
     const api = async () => {
       const res = await axios({
         method: 'post',
-        url: '/api/SingleContactForm',
+        url: '/.netlify/functions/SingleContactForm',
         data: { id },
       })
       // console.log(res.data.data.findContactFormByID)
@@ -60,7 +60,7 @@ const EditContactForm = ({ id }: any) => {
           try {
             const res = await axios({
               method: 'put',
-              url: '/api/UpdateContactForm',
+              url: '/.netlify/functions/UpdateContactForm',
               data: {
                 id,
                 firstName: values.firstName,

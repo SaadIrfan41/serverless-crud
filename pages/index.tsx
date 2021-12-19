@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 const Home: NextPage = () => {
   const [{ data, loading, error }, refetch] = useAxios(
-    '/api/GetAllContactForms'
+    '/.netlify/functions/GetAllContactForms'
   )
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
     try {
       const res = await axios({
         method: 'delete',
-        url: '/api/DeleteContactForm',
+        url: '/.netlify/functions/DeleteContactForm',
         data: {
           id,
         },

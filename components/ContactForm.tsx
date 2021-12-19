@@ -35,7 +35,7 @@ const ContactForm = () => {
             // })
             const res = await axios({
               method: 'post',
-              url: '/api/CreateContactForm',
+              url: '/.netlify/functions/CreateContactForm',
               data: values,
             })
             console.log(res)
