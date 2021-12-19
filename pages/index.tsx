@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+
 import Link from 'next/link'
 import useAxios from 'axios-hooks'
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid'
@@ -12,9 +12,10 @@ const Home: NextPage = () => {
   const [{ data, loading, error }, refetch] = useAxios(
     '/api/GetAllContactForms'
   )
+
   useEffect(() => {
     refetch()
-  }, [])
+  }, [refetch])
 
   if (loading)
     return (
